@@ -1,0 +1,11 @@
+certifi==2026.6.17
+charset-normalizer==3.4.7
+idna==3.18
+kagglehub==1.0.2
+kagglesdk==0.1.30
+packaging==26.2
+protobuf==7.35.1
+PyYAML==6.0.3
+requests==2.34.2
+tqdm==4.68.3
+urllib3==2.7.0
