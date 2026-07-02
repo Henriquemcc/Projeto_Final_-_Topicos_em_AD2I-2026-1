@@ -4,6 +4,7 @@ import pandas as pd
 import tensorflow as tf
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 import os
 
 df = pd.read_csv('Dataset/processed/plantvillage_data.csv')
@@ -92,8 +93,18 @@ model.compile(
 )
 
 # Adicionando callback para parar o treino mais cedo caso o modelo pare de melhorar
-early_stopping = tf.keras.callbacks.EarlyStopping(
+early_stopping = EarlyStopping(
     monitor='val_loss', patience=5, restore_best_weights=True
+)
+
+# Criando o callback para salvar o melhor modelo
+checkpoint_callback = ModelCheckpoint(
+    filepath='modelo_resnet50_plantvillage.keras', # Nome do arquivo a ser salvo
+    monitor='val_loss',                      # Monitora a perda da validação
+    save_best_only=True,                     # Salva apenas se melhorar (sobrescreve o anterior)
+    save_weights_only=False,                 # Salva a arquitetura + pesos + otimizador
+    mode='min',                              # 'min' porque queremos que a perda diminua
+    verbose=1                                # Mostra no console quando salvar
 )
 
 # Obtendo fotmato das imagens e dos rótulos
@@ -107,7 +118,7 @@ history = model.fit(
     ds_treino,
     validation_data=ds_val,
     epochs=20,
-    callbacks=[early_stopping]
+    callbacks=[early_stopping, checkpoint_callback]
 )
 
 # Exportando modelo
