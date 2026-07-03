@@ -7,6 +7,7 @@ from sklearn.preprocessing import LabelEncoder
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 import os
 import json
+import joblib
 
 # Abrindo dataset
 df = pd.read_csv('Dataset/processed/plantvillage_data.csv')
@@ -129,3 +130,6 @@ model.save('modelo_resnet50_plantvillage.h5')
 # Exportando histórico
 with open('historico_treinamento_resnet50_plantvillage.json', 'w') as f:
     json.dump(historico.history, f)
+
+# Exportando o Label Encoder
+joblib.dump(lable_encoder, 'labelencoder_resnet50_plantvillage.pkl')

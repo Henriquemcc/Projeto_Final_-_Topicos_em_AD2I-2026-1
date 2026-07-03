@@ -9,6 +9,7 @@ from tensorflow.keras.applications import EfficientNetV2S
 from tensorflow.keras import models, layers
 import os
 import json
+import joblib
 
 
 # Abrindo dataset
@@ -124,3 +125,6 @@ model.save('modelo_efficientnetv2s_plantvillage.h5')
 # Exportando histórico
 with open('historico_treinamento_efficientnetv2s_plantvillage.json', 'w') as f:
     json.dump(historico.history, f)
+
+# Exportando o Label Encoder
+joblib.dump(lable_encoder, 'labelencoder_efficientnetv2s_plantvillage.pkl')
