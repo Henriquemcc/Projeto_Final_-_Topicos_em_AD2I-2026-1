@@ -6,6 +6,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 import os
+import json
 
 df = pd.read_csv('Dataset/processed/plantvillage_data.csv')
 
@@ -114,7 +115,7 @@ for imagens, rotulos in ds_treino.take(1):
     break
 
 # Treinando modelo
-history = model.fit(
+historico = model.fit(
     ds_treino,
     validation_data=ds_val,
     epochs=20,
@@ -123,3 +124,7 @@ history = model.fit(
 
 # Exportando modelo
 model.save('modelo_resnet50_plantvillage.h5')
+
+# Exportando histórico
+with open('historico_treinamento_resnet50_plantvillage.json', 'w') as f:
+    json.dump(historico.history, f)
