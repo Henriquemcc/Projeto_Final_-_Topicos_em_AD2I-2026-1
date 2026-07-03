@@ -8,6 +8,7 @@ from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 import os
 import json
 
+# Abrindo dataset
 df = pd.read_csv('Dataset/processed/plantvillage_data.csv')
 
 # Extraíndo caminhos das imagens e rótulos
