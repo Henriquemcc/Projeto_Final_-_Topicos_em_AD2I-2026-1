@@ -59,7 +59,7 @@ ds_treino = ds_treino.shuffle(buffer_size=1000).batch(BATCH_SIZE).prefetch(AUTOT
 
 ds_val = tf.data.Dataset.from_tensor_slices((x_val, y_val))
 ds_val = ds_val.map(processar_imagem_resnt50, num_parallel_calls=AUTOTUNE)
-df_val = ds_val.batch(BATCH_SIZE).prefetch(AUTOTUNE)
+ds_val = ds_val.batch(BATCH_SIZE).prefetch(AUTOTUNE)
 
 # Construíndo modelo ResNet50
 base_model = tf.keras.applications.ResNet50(
