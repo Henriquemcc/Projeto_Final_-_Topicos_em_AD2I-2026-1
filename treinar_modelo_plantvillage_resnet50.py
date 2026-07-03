@@ -13,7 +13,7 @@ df = pd.read_csv('Dataset/processed/plantvillage_data.csv')
 caminhos_imagens = df['file_path'].values
 rotulos = df['class'].values
 
-# Convertendo rótulos em texto
+# Convertendo rótulos de texto para número
 lable_encoder = LabelEncoder()
 rotulos_inteiros = lable_encoder.fit_transform(rotulos)
 num_classes = len(lable_encoder.classes_)
