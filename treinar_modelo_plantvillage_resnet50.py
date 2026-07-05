@@ -71,11 +71,10 @@ base_model = tf.keras.applications.ResNet50(
     input_shape=(224, 224, 3)
 )
 
-# Correção 1: 'treinable' alterado para 'trainable'
+# Congelando as camadas base para não serem atualizadas no primeiro momento
 base_model.trainable = False 
 
 # Construindo modelo final
-# Correção 2: '244' alterado para '224'
 inputs = tf.keras.Input(shape=(224, 224, 3)) 
 
 x = base_model(inputs, training=False)
