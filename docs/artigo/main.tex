@@ -5,7 +5,35 @@
 \usepackage[utf8]{inputenc}
 \usepackage[brazil]{babel}
 %\usepackage[latin1]{inputenc}  
+\usepackage{listings}
+\usepackage{xcolor}
 
+% 1. Definindo as cores que você quer usar
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92} % Cor de fundo suave
+
+% 2. Configurando o estilo do código
+\lstdefinestyle{mestilo}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen}\itshape, % Comentários em verde e itálico
+    keywordstyle=\color{codepurple}\bfseries,% Palavras-chave em roxo e negrito
+    numberstyle=\tiny\color{codegray},      % Números de linha em cinza
+    stringstyle=\color{codegreen},          % Strings em verde
+    basicstyle=\ttfamily\footnotesize,      % Fonte padrão do código
+    breakatwhitespace=false,         
+    breaklines=true,                   % Quebra de linha automática
+    captionpos=b,                      
+    keepspaces=true,                   
+    numbers=left,                      % Números de linha à esquerda
+    numbersep=5pt,                     
+    showspaces=false,                  
+    showstringspaces=false,
+    showtabs=false,                    
+    tabsize=2,
+    frame=single                       % Borda ao redor do código
+}
      
 \sloppy
 
@@ -56,7 +84,55 @@ Na agricultura um dos desafios encontrados consiste na detecção e isolamento d
 
 \subsection{Modelos}
 
-\paragraph{}Neste trabalho foram utilizados os seguintes modelos: ResNet50, EfficientNetV2S e GoogleNet. A escolha dos modelos ResNet50 e EfficientNet se deu pelo fato de nos trabalhos relacionados analisados, esse datasets foram utilizados para o treinamento do modelo de rede neural convolucional. Dessa forma, o GoogleNet foi escolhido para ser o modelo a ser comparado com o EfficientNet e o ResNet50.
+\paragraph{}Neste trabalho foram utilizados os seguintes modelos: ResNet50, EfficientNetV2S e GoogleNet. A escolha dos modelos ResNet50 e EfficientNet se deu pelo fato de nos trabalhos relacionados analisados, esse modelos foram utilizados para o treinamento da rede neural convolucional. Dessa forma, o GoogleNet foi escolhido para ser o modelo a ser comparado com o EfficientNet e o ResNet.
+
+\paragraph{}Um aspecto fundamental no desenvolvimento dos modelos foi o uso da biblioteca Tensorflow. Através dela foi possível utilizar os modelos pré-existentes ResNet50 e EfficientNetV2S. Dessa forma, não foi necessário implementar manualmente esses modelos.
+
+\paragraph{}Em relação aos valores iniciais para os pesos dos modelos, foram utilizados os valores da ImageNet. Dessa forma, através do aprendizado por transferência, foi possível economizar tempo no treinamento dos modelos.
+
+\lstinputlisting[
+    breaklines=true,
+    language={Python},
+    caption={Código fonte da construção do modelo ResNet 50},
+    label={codigo:resnet50},
+    style=mestilo
+]{Codigo/resnet50.py}
+
+\lstinputlisting[
+    breaklines=true,
+    language={Python},
+    caption={Código fonte da construção do modelo EfficientNetV2S},
+    label={codigo:efficientnetv2s},
+    style=mestilo
+]{Codigo/efficientnetv2s.py}
+
+\paragraph{}Em relação ao modelo GoogleNet, este teve de ser implementado manualmente, tendo em vista que o Tensotflow não possuí este modelo pronto. Dessa forma, foram desenvolvidas as seguintes funções: inception\_module, na qual realiza parte da convoluções realizadas pelo modelo;  auxiliary\_classifier, na qual realiza a classificação auxiliar do modelo; e build\_googlenet, que finalmente realiza a construção do modelo.
+
+\lstinputlisting[
+    breaklines=true,
+    language={Python},
+    caption={Código fonte da construção do modelo GoogleNet},
+    label={codigo:googlenet},
+    style=mestilo
+]{Codigo/googlenet.py}
+
+\paragraph{}Outro aspecto fundamental para o treinamento dos modelos foi o desenvolvimento de calbacks para os modelos. Dessa forma, durante o processo de treinamento, o treinamento era interrompido para: checar se houve melhoria em relação ao modelo anterior, podendo abreviar o treinamento caso não tenha ocorrido nenhuma melhoria; e salvamento automático, possibilitando recuperar o modelo em caso de queda de energia ou interrupção durante o treinamento.
+
+\lstinputlisting[
+    breaklines=true,
+    language={Python},
+    caption={Código fonte do callback de abreviação do treinamento em caso de não haver melhora},
+    label={codigo:earlystoppingcallback},
+    style=mestilo
+]{Codigo/early_stopping_callback.py}
+
+\lstinputlisting[
+    breaklines=true,
+    language={Python},
+    caption={Código fonte do callback de salvamento automático do modelo ResNet50},
+    label={codigo:checkpointcallback},
+    style=mestilo
+]{Codigo/checkpoint_callback.py}
 
 \section{Resultados}
 
