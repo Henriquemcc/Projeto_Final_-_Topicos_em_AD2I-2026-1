@@ -188,3 +188,10 @@ pyrightconfig.json
 Dataset
 Dataset/**
 modelo_resnet50_plantvillage.keras
+historico_treinamento_googlenet_plantvillage.json
+labelencoder_googlenet_plantvillage.pkl
+modelo_efficientnetv2s_plantvillage.keras
+modelo_googlenet_plantvillage.h5
+modelo_googlenet_plantvillage.keras
+modelo_resnet50_plantvillage.h5
+
