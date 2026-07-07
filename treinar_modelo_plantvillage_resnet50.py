@@ -84,8 +84,8 @@ x = tf.keras.layers.Dropout(0.2)(x)
 # Camada de saída com neurônios igual ao número de classes
 outputs = tf.keras.layers.Dense(num_classes, activation='softmax')(x)
 
-# Correção 3: 'input' alterado para 'inputs'
-model = tf.keras.Model(inputs, outputs) 
+# Construíndo modelo
+model = tf.keras.Model(inputs, outputs)
 
 # Compilando o modelo
 model.compile(
