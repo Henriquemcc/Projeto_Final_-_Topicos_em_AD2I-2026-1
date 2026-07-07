@@ -3,7 +3,7 @@
 \usepackage{sbc-template}
 \usepackage{graphicx,url}
 \usepackage[utf8]{inputenc}
-\usepackage[brazil]{babel}
+\usepackage[brazilian]{babel}
 %\usepackage[latin1]{inputenc}  
 \usepackage{listings}
 \usepackage{xcolor}
@@ -76,7 +76,28 @@ Na agricultura um dos desafios encontrados consiste na detecção e isolamento d
 
 \subsection{Dataset}
 
-\paragraph{}Para o desenvolvimento deste trabalho, foi utilizado o Plant Village Dataset, o qual possuí 38 classes de doenças em plantas, incluindo classes de plantas saudáveis. A escolha deste dataset se deu pelo fato dele ser um dataset utilizado para a classificação de doenças de plantas.
+\paragraph{}Para o desenvolvimento deste trabalho, foi utilizado o Plant Village Dataset\cite{plantvillagedataset}, o qual possuí 38 classes de doenças em plantas, incluindo classes de plantas saudáveis. A escolha deste dataset se deu pelo fato dele ser um dataset utilizado para a classificação de doenças de plantas. Este dataset está dividido nas seguintes categorias: ‘color’, conforme exemplificada na Figura \ref{fig:applescab_colorida}, que possuí imagens coloridas de folhas de planta; ‘grayscale’, conforme exemplificada na Figura \ref{fig:applescab_grayscale}, que possuí imagens em preto e branco também de folhas de plantas; e ‘segmented’, conforme exemplificada na Figura \ref{fig:applescab_segmentada}, que possuí imagens de folhas de plantas com o fundo preto.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.25\linewidth]{Imagens/0a5e9323-dbad-432d-ac58-d291718345d9___FREC_Scab 3417_colorida.JPG}
+    \caption{Imagem colorida da classe Apple Scab}
+    \label{fig:applescab_colorida}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.25\linewidth]{Imagens/0a5e9323-dbad-432d-ac58-d291718345d9___FREC_Scab 3417_grayscale.JPG}
+    \caption{Imagem preto e branco da classe Apple Scab}
+    \label{fig:applescab_grayscale}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.25\linewidth]{Imagens/0a5e9323-dbad-432d-ac58-d291718345d9___FREC_Scab 3417_final_masked.jpg}
+    \caption{Imagem segmentada da classe Apple Scab}
+    \label{fig:applescab_segmentada}
+\end{figure}
 
 \subsection{Pré-Processamento}
 
@@ -157,6 +178,8 @@ Na agricultura um dos desafios encontrados consiste na detecção e isolamento d
 
 \paragraph{}Em relação à sensibilidade, equivalente à Taxa de Verdadeiro Positivo, o modelo ResNet50 obteve um valor de 97,83\%, enquanto o modelo GoogLeNet obteve um valor de 96,83\%. E finalmente, o modelo EfficientNetV2S obteve uma taxa de 98,85\%. Dessa forma o EfficientNetV2S foi o modelo que obteve a maior sensibilidade.
 
+\paragraph{}Além disso, também foram geradas as matrizes de confusão dos modelos, conforme mostrado nas Figuras \ref{fig:matriz_confusao_resnet50}, \ref{fig:matriz_confusao_googlenet} e \ref{fig:matriz_confusao_efficientnetv2s}. Analisando os valores das diagonais, é possível perceber que os três modelos estão classificando corretamente as 38 classes. Outrossim, é possível perceber que houve um desbalanceamento nas classes do dataset, sendo maior parte das classes 'Orange\_\_\_Haunglongbing\_(Citrus\_greening)', 'Soybean\_\_\_healthy' e 'Tomato\_\_\_Tomato\_Yellow\_Leaf\_Curl\_Virus'.
+
 \begin{table}[]
 \begin{tabular}{|l|l|l|l|}
 \hline
@@ -191,7 +214,7 @@ EfficientNetV2S & 99,07\%  & 2,66\% & 98,85\%                                   
 
 \section{Conclusão}
 
-\paragraph{}Através das métricas coletadas e analisadas foi possível perceber que o melhor modelo para a classificação de plantas doentes é o EfficientNetV2S. Dessa forma, o modelo proposto (GoogLeNet) para ser utilizado na classificação de plantas doentes não se mostrou melhor que o EfficientNetV2S e nem o ResNet50 propostos na literatura.
+\paragraph{}Através das métricas coletadas e analisadas foi possível perceber que o melhor modelo para a classificação de plantas doentes é o EfficientNetV2S. Dessa forma, o modelo proposto (GoogLeNet) para ser utilizado na classificação de plantas doentes não se mostrou melhor que o EfficientNetV2S e nem o ResNet50, propostos na literatura.
 
 \paragraph{}Para trabalhos futuros, sugere-se realizar uma análise dos hiperparâmetros de cada modelo visando a identificar aqueles que possuem otimizem o desempenho na classificação de plantas. Dessa forma, os modelos utilizados poderiam ser melhores otimizados.
 
