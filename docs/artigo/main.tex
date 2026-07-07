@@ -50,13 +50,13 @@
 
 \begin{abstract}
 
-In agriculture one of the challenges consists of the detection and isolation of diseased plants. Through computer vision, this process can be automated, reducing the losses of sick crops. In this work, have been developed Convolutional Neural Networks (CNNs) machine learning models to identify and detect sick plants. For this end, the following models have been developed: ResNet50, EfficientNetV2S and GoogleNet.
+In agriculture one of the challenges consists of the detection and isolation of diseased plants. Through computer vision, this process can be automated, reducing the losses of sick crops. In this work, have been developed Convolutional Neural Networks (CNNs) machine learning models to identify and detect sick plants. For this end, the following models have been developed: ResNet50, EfficientNetV2S and GoogLeNet.
   
 \end{abstract}
      
 \begin{resumo} 
 
-Na agricultura um dos desafios encontrados consiste na detecção e isolamento de plantas doentes. Através da visão computacional, esse processo pode ser automatizado, podendo reduzir as perdas resultantes de culturas doentes. Neste trabalho, foram desenvolvidos modelos de aprendizado de máquina utilizando Redes Neurais Convolucionais (CNNs) visando a detecção de plantas doentes. Para isso foram desenvolvidos os seguintes modelos: ResNet50, EfficientNetV2S e GoogleNet.
+Na agricultura um dos desafios encontrados consiste na detecção e isolamento de plantas doentes. Através da visão computacional, esse processo pode ser automatizado, podendo reduzir as perdas resultantes de culturas doentes. Neste trabalho, foram desenvolvidos modelos de aprendizado de máquina utilizando Redes Neurais Convolucionais (CNNs) visando a detecção de plantas doentes. Para isso foram desenvolvidos os seguintes modelos: ResNet50, EfficientNetV2S e GoogLeNet.
   
 \end{resumo}
 
@@ -82,9 +82,16 @@ Na agricultura um dos desafios encontrados consiste na detecção e isolamento d
 
 \paragraph{}Visando a facilitar o treinamento do modelo, foi gerado uma tabela no formato de arquivo CSV contendo os seguintes atributos: os nomes dos arquivos de imagem; a versão desse arquivo: color, grayscale e segmented; a classe; o tipo de planta; e o tipo de doença. Através dessa tabela, foi possível realizar a separação dos conjuntos de treino e teste que foram utilizados no treinamento dos modelos. A separação do conjunto de treino e de teste foi feita pela função ‘train\_test\_split’, à qual foi definido como critério de separação a margem de 20\% para o conjunto de teste, além do estado randômico com o valor 1024.
 
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{Imagens/captura_tela_planilha_dataset.png}
+    \caption{Captura de tela da tabela com as informações das imagens do Dataset}
+    \label{fig:captura_tela_tabela_informacoes_dataset}
+\end{figure}
+
 \subsection{Modelos}
 
-\paragraph{}Neste trabalho foram utilizados os seguintes modelos: ResNet50, EfficientNetV2S e GoogleNet. A escolha dos modelos ResNet50 e EfficientNet se deu pelo fato de nos trabalhos relacionados analisados, esse modelos foram utilizados para o treinamento da rede neural convolucional. Dessa forma, o GoogleNet foi escolhido para ser o modelo a ser comparado com o EfficientNet e o ResNet.
+\paragraph{}Neste trabalho foram utilizados os seguintes modelos: ResNet50\cite{he2015deepresiduallearningimage}, EfficientNetV2S\cite{tan2021efficientnetv2smallermodelsfaster} e GoogLeNet\cite{szegedy2014goingdeeperconvolutions}. A escolha dos modelos ResNet50 e EfficientNet se deu pelo fato de nos trabalhos relacionados analisados, esse modelos foram utilizados para o treinamento da rede neural convolucional. Dessa forma, o GoogLeNet foi escolhido para ser o modelo a ser comparado com o EfficientNet e o ResNet.
 
 \paragraph{}Um aspecto fundamental no desenvolvimento dos modelos foi o uso da biblioteca Tensorflow. Através dela foi possível utilizar os modelos pré-existentes ResNet50 e EfficientNetV2S. Dessa forma, não foi necessário implementar manualmente esses modelos.
 
@@ -106,17 +113,17 @@ Na agricultura um dos desafios encontrados consiste na detecção e isolamento d
     style=mestilo
 ]{Codigo/efficientnetv2s.py}
 
-\paragraph{}Em relação ao modelo GoogleNet, este teve de ser implementado manualmente, tendo em vista que o Tensotflow não possuí este modelo pronto. Dessa forma, foram desenvolvidas as seguintes funções: inception\_module, na qual realiza parte da convoluções realizadas pelo modelo;  auxiliary\_classifier, na qual realiza a classificação auxiliar do modelo; e build\_googlenet, que finalmente realiza a construção do modelo.
+\paragraph{}Em relação ao modelo GoogLeNet, este teve de ser implementado manualmente, tendo em vista que o Tensotflow não possuí este modelo pronto. Dessa forma, foram desenvolvidas as seguintes funções: inception\_module, na qual realiza parte da convoluções realizadas pelo modelo;  auxiliary\_classifier, na qual realiza a classificação auxiliar do modelo; e build\_googlenet, que finalmente realiza a construção do modelo.
 
 \lstinputlisting[
     breaklines=true,
     language={Python},
-    caption={Código fonte da construção do modelo GoogleNet},
+    caption={Código fonte da construção do modelo GoogLeNet},
     label={codigo:googlenet},
     style=mestilo
 ]{Codigo/googlenet.py}
 
-\paragraph{}Outro aspecto fundamental para o treinamento dos modelos foi o desenvolvimento de calbacks para os modelos. Dessa forma, durante o processo de treinamento, o treinamento era interrompido para: checar se houve melhoria em relação ao modelo anterior, podendo abreviar o treinamento caso não tenha ocorrido nenhuma melhoria; e salvamento automático, possibilitando recuperar o modelo em caso de queda de energia ou interrupção durante o treinamento.
+\paragraph{}Outro aspecto fundamental para o treinamento dos modelos foi o desenvolvimento de calbacks para os modelos. Dessa forma, durante o processo de treinamento, o treinamento era interrompido para checar se houve melhoria em relação ao modelo anterior, podendo abreviar o treinamento caso não tenha ocorrido nenhuma melhoria; e salvamento automático, possibilitando recuperar o modelo em caso de queda de energia ou interrupção durante o treinamento.
 
 \lstinputlisting[
     breaklines=true,
@@ -134,10 +141,59 @@ Na agricultura um dos desafios encontrados consiste na detecção e isolamento d
     style=mestilo
 ]{Codigo/checkpoint_callback.py}
 
+\paragraph{}Para o treinamento dos modelos de rede neural convolucional foi utilizado o seguinte hardware: Processador Intel Core Ultra 7 265K de 20 núcleos, 32GB de Memória RAM DDR5, Placa de Vídeo: NVIDIA GeForce RTX 5060 Ti e o Sistema Operacional foi o Windows 11. Através deste hardware, esses modelos foram executados ao mesmo tempo. Cada modelo foi treinado com todo o conjunto de treino do dataset em 20 épocas.
+
+\paragraph{}Infelizmente, o treinamento do modelo EfficientNetV2S demorou demais para terminar, e ele teve de ser finalizado com 4 épocas de treinamento. Já os modelos ResNet50 e GoogLeNet puderam terminar de executar, sendo que o GoogLeNet foi o único dos modelos no qual foi coletado o histórico de acurácia e de perda durante o treinamento.
+
+\paragraph{}No final do treinamento dos modelos, foi exportado arquivos keras para cada modelo com o save das melhores versões do respectivo modelo. Dessa forma, para a avaliação das métricas de cada modelo, foi realizada a importação do modelo treinado e esse modelo foi utilizado para classificar o conjunto de testes. Com o conjunto de testes classificado, foram geradas as métricas para cada modelo, incluindo as matrizes de confusão e o gráfico da perda durante o treinamento (apenas para o modelo GoogLeNet).
+
+\paragraph{}Para garantir que não houvesse ‘trapaça’ durante a avaliação dos modelos, a separação do conjunto de treino e teste foi feita exatamente da mesma forma tanto durante o treino dos modelos quanto durante a avaliação dos mesmos. Dessa forma, foi utilizado o mesmo estado randômico e a mesma porcentagem de separação do teste e do treino para a função train\_test\_split.
+
 \section{Resultados}
+
+\paragraph{}O modelo ResNet50 obteve uma acurácia de 98,22\%, enquanto o modelo GoogLeNet obteve uma acurácia de 97,81\%. E finalmente, o modelo EfficientNetV2S obteve uma acurácia de 99,07\%. Dessa forma, na acurácia o modelo EfficientNetV2S foi o que teve o maior valor.
+
+\paragraph{}No que tange à perda, o modelo ResNet50 obteve uma perda de 5,45\%, enquanto o modelo GoogLeNet obteve uma perda de 7,47\%. Já o modelo EfficientNetV2S obteve uma perda de 2,66\%. Dessa forma, o EfficientNet2VS foi o modelo que teve o menor valor.
+
+\paragraph{}Em relação à sensibilidade, equivalente à Taxa de Verdadeiro Positivo, o modelo ResNet50 obteve um valor de 97,83\%, enquanto o modelo GoogLeNet obteve um valor de 96,83\%. E finalmente, o modelo EfficientNetV2S obteve uma taxa de 98,85\%. Dessa forma o EfficientNetV2S foi o modelo que obteve a maior sensibilidade.
+
+\begin{table}[]
+\begin{tabular}{|l|l|l|l|}
+\hline
+Modelo          & Acurácia & Perda  & Sensibilidade (Taxa de Verdadeiro Positivo) \\ \hline
+ResNet50        & 98,22\%  & 5,45\% & 97,83\%                                     \\ \hline
+GoogLeNet       & 97,81\%  & 7,47\% & 96,83\%                                     \\ \hline
+EfficientNetV2S & 99,07\%  & 2,66\% & 98,85\%                                     \\ \hline
+\end{tabular}
+\caption{Métricas de cada modelo}
+\end{table}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{Imagens/matriz_confusao_resnet_plantvillage.png}
+    \caption{Matriz de confusão do modelo ResNet50}
+    \label{fig:matriz_confusao_resnet50}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{Imagens/matriz_confusao_googlenet_plantvillage.png}
+    \caption{Matriz de confusão do modelo GoogLeNet}
+    \label{fig:matriz_confusao_googlenet}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{Imagens/matriz_confusao_efficientnet_plantvillage.png}
+    \caption{Matriz de confusão do modelo EfficientNetV2S}
+    \label{fig:matriz_confusao_efficientnetv2s}
+\end{figure}
 
 \section{Conclusão}
 
+\paragraph{}Através das métricas coletadas e analisadas foi possível perceber que o melhor modelo para a classificação de plantas doentes é o EfficientNetV2S. Dessa forma, o modelo proposto (GoogLeNet) para ser utilizado na classificação de plantas doentes não se mostrou melhor que o EfficientNetV2S e nem o ResNet50 propostos na literatura.
+
+\paragraph{}Para trabalhos futuros, sugere-se realizar uma análise dos hiperparâmetros de cada modelo visando a identificar aqueles que possuem otimizem o desempenho na classificação de plantas. Dessa forma, os modelos utilizados poderiam ser melhores otimizados.
 
 
 \bibliographystyle{sbc}

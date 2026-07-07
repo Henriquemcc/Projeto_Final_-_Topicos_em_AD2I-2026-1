@@ -15,7 +15,7 @@ base_model = EfficientNetV2S(
 # Congelando as camadas base para nao serem atualizadas no primeiro momento
 base_model.treinable = False
 
-# Construindo o modelo sequencial adicionando a base e as novas camadas de classificaçao
+# Construindo o modelo sequencial adicionando a base e as novas camadas de classificacao
 model = models.Sequential([
     base_model,
     layers.GlobalAveragePooling2D(),

@@ -22,7 +22,7 @@ x = base_model(inputs, training=False)
 x = tf.keras.layers.GlobalAveragePooling2D()(x)
 x = tf.keras.layers.Dropout(0.2)(x)
 
-# Camada de saida com neurônios igual ao número de classes
+# Camada de saida com neuronios igual ao numero de classes
 outputs = tf.keras.layers.Dense(num_classes, activation='softmax')(x)
 
 # Construindo modelo
