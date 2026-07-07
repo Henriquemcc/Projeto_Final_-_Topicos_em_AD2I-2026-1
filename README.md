@@ -46,7 +46,15 @@ Para baixar o dataset, em um Terminal (Prompt de Comando ou PowerShell), na past
 python baixar_base_de_dados_plantvillage-dataset.py
 ```
 
-### 4. Execute os modelos
+### 4. Gere o dataframe
+
+Para gerar o dataframe, em um Terminal (Prompt de Comando ou PowerShell), na pasta do projeto, digite o seguinte comando:
+
+```shell
+python criar_dataframe_plantvillage-dataset.py
+```
+
+### 5. Execute os modelos
 
 Para executar o modelo ResNet50, em um Terminal (Prompt de Comando ou PowerShell), na pasta do projeto, digite o seguinte comando:
 
@@ -66,7 +74,7 @@ E para executar o modelo EfficientNetV2S, em um Terminal (Prompt de Comando ou P
 python treinar_modelo_plantvillage_efficientnet.py
 ```
 
-### 5. Obtendo as métricas e gerando os gráficos
+### 6. Obtendo as métricas e gerando os gráficos
 
 Para obter as métricas do modelo ResNet50, abra a planilha [metricas_modelo_plantvillage_resnet.ipynb](metricas_modelo_plantvillage_resnet.ipynb) e execute todas as células.
 
